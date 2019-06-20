@@ -45,6 +45,6 @@ while i < number_of_total_test
   i += 1
 end
 
-x_response_filename = $x_response.gsub("cc:","").gsub("=","_")
+x_response_filename = $x_response.gsub("cc:","").gsub("=","_").gsub("-","_")
 
 File.write("./#{x_response_filename}_#{$host}_"+(Time.now.to_f * 1000).to_i.to_s+".txt", times)
