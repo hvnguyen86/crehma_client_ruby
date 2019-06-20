@@ -18,10 +18,13 @@ delta = makeRequest(uri,$x_response,$signature)
 times = ""
 
 while i < number_of_total_test
-  
-  delta = makeRequest(uri,$x_response,$signature)
+  results = makeRequest(uri,$x_response,$signature)
+  #puts results
+  content_length = results[1]
+  delta = results[0]
   times = times + delta.to_s + "\n"
   puts delta
+  #puts content_length
   i += 1
   sleep $pause
 end

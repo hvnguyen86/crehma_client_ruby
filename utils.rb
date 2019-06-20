@@ -37,6 +37,7 @@ def makeRequest(uri,x_response,signature)
   		http.request(req)
 	}
 
+	#puts req.each_header.to_h
 
 	if signature
 		if !verifyResponse(res,uri.hostname+uri.path,"GET")
@@ -48,8 +49,10 @@ def makeRequest(uri,x_response,signature)
 	# puts res.each_header.to_h
 	# response = http.request(req)
 	finish = (Time.now.to_f * 1000).to_i
+
 	delta = finish - start
-	return delta
+	results = Array[delta,res["Content-Length"]]
+	return results
 end
 
 $base64Key = "fJW7ebII2E4RU3fD4BjixIDnV++0mq8LUY5TMx2C/g5nRDDies4AFLZ939sU1uoMH+uey1xUMKVSFCd+VNXg+4yOS1M/DtM+9ObW108iNmlXZQsKgXLkRLrBkZ78y2r8Mml3WXe14ktXjCjhRXTx5lBsTKMEcBTxepe1aQ+0hLNOUDhsUKr31t9fS5/9nAQC7s9sPln54Oic1pnDOIfnBEku/vPl3zQCMtU2eRk9v+AfschSUGOvLV6Ctg0cGuSi/h8oKZuUYXrjoehUo1gBvZLVBpcCxZt1/ySGTInLic3QbfZwlT5sJKrYvfHXjANOEIM7JZMaSnfMdK2R9OJJpw=="
