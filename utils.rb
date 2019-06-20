@@ -39,7 +39,9 @@ def makeRequest(uri,x_response,signature)
 
 
 	if signature
-		verifyResponse(res,uri.hostname+uri.path,"GET")
+		if !verifyResponse(res,uri.hostname+uri.path,"GET")
+			puts "Wrong Signature"
+		end
 	end
 	# puts res.code
 	# puts res.body
