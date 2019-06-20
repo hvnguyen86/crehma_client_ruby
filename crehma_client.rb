@@ -23,6 +23,7 @@ while i < number_of_total_test
   times = times + delta.to_s + "\n"
   puts delta
   i += 1
+  sleep $pause
 end
 
 x_response_filename = $x_response.gsub("cc:","").gsub("=","_").gsub("-","_")

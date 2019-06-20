@@ -45,7 +45,7 @@ def makeRequest(uri,x_response,signature)
 	end
 	# puts res.code
 	# puts res.body
-	puts res.each_header.to_h
+	# puts res.each_header.to_h
 	# response = http.request(req)
 	finish = (Time.now.to_f * 1000).to_i
 	delta = finish - start
@@ -145,11 +145,14 @@ def verifyResponse(response, cacheKey, method)
 end
 
 def verifySignatureFreshness(maxAge,tvp)
+
 	tvpDate = (Time.parse(tvp).to_f * 1000).to_i
-	delta = 5000
+
+	delta = 0
 	now = (Time.now.to_f * 1000).to_i
 	signatureExpirationDate = tvpDate + 5000 + Integer(maxAge) * 1000;
-
+	# puts "sig: #{signatureExpirationDate}"
+	# puts "no: #{now}"
 	if now < signatureExpirationDate
 		return true
 	else 
