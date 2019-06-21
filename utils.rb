@@ -1,6 +1,7 @@
 require 'time'
 require "base64"
 require "openssl"
+require "json"
 $tbsRequestHeaders = Array[
 "Host",
 "Accept",
@@ -48,6 +49,8 @@ def makeRequest(uri,x_response,signature)
 	# puts res.body
 	# puts res.each_header.to_h
 	# response = http.request(req)
+	json = JSON.parse(res.body)
+	puts json["Id"]
 	finish = (Time.now.to_f * 1000).to_i
 
 	delta = finish - start
