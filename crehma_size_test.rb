@@ -40,6 +40,7 @@ while j < $steps
 	$csv_array[content_length.to_i] = times_array
 	j += 1
 	$abl = $abl + $stepSize
+	sleep $pause
 end
 
 
