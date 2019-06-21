@@ -36,11 +36,12 @@ while j < $steps
 	  puts delta
 	  times_array.push(delta)
 	  i += 1
+	  sleep $pause
 	end
 	$csv_array[content_length.to_i] = times_array
 	j += 1
 	$abl = $abl + $stepSize
-	sleep $pause
+
 end
 
 
