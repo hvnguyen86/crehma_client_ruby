@@ -53,7 +53,7 @@ def makeRequest(uri,x_response,signature)
 	end
 	# puts res.code
 	# puts res.body
-	puts res.each_header.to_h
+	#puts res.each_header.to_h
 	# response = http.request(req)
 	json = JSON.parse(res.body)
 	puts json["Id"]

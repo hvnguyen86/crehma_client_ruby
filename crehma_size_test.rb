@@ -33,7 +33,7 @@ while j < $steps
 	  delta = results[0]
 	  content_length = results[1]
 	  times = times + delta.to_s + "\n"
-	  #puts delta
+	  puts delta
 	  times_array.push(delta)
 	  i += 1
 	end
