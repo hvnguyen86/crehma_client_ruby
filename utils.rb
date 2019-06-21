@@ -30,11 +30,11 @@ def makeRequest(uri,x_response,signature)
 	req["Accept"] = "application/json"
 	start = (Time.now.to_f * 1000).to_i
 	if signature
-		 start_signature = (Time.now.to_f * 1000).to_i
+		 #start_signature = (Time.now.to_f * 1000).to_i
 		 req["Signature"] = signRequest(req)
 		 req["Create-Signature"] = "true"
 		 end_signature = (Time.now.to_f * 1000).to_i
-		 puts "sig:" + (end_signature - start_signature).to_s
+		 #puts "sig:" + (end_signature - start_signature).to_s
 		#puts signRequest(req)
 	end
 	res = Net::HTTP.start(uri.hostname, uri.port) {|http|
@@ -44,12 +44,12 @@ def makeRequest(uri,x_response,signature)
 	#puts req.each_header.to_h
 
 	if signature
-		start_verification = (Time.now.to_f * 1000).to_i
+		#start_verification = (Time.now.to_f * 1000).to_i
 		if !verifyResponse(res,uri.hostname+uri.path,"GET")
 			puts "Wrong Signature"
 		end
-		end_verification = (Time.now.to_f * 1000).to_i
-		puts "ver:" + (end_verification - start_verification).to_s
+		#end_verification = (Time.now.to_f * 1000).to_i
+		#puts "ver:" + (end_verification - start_verification).to_s
 	end
 	# puts res.code
 	# puts res.body
