@@ -28,6 +28,7 @@ def makeRequest(uri,x_response,signature)
 	req = Net::HTTP::Get.new(uri)
 	req["X-Response"] = x_response
 	req["Accept"] = "application/json"
+	req["Fake-Host"] = $host
 	start = (Time.now.to_f * 1000).to_i
 	if signature
 		 #start_signature = (Time.now.to_f * 1000).to_i
