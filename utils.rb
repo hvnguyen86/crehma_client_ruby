@@ -42,13 +42,14 @@ def makeRequest(uri,x_response,signature)
 	}
 
 	#puts req.each_header.to_h
-
+	ver = 0
 	if signature
-		#start_verification = (Time.now.to_f * 1000).to_i
+		start_verification = (Time.now.to_f * 1000).to_i
 		if !verifyResponse(res,uri.hostname+uri.path,"GET")
 			puts "Wrong Signature"
 		end
-		#end_verification = (Time.now.to_f * 1000).to_i
+		end_verification = (Time.now.to_f * 1000).to_i
+		ver = end_verification - start_verification
 		#puts "ver:" + (end_verification - start_verification).to_s
 	end
 	# puts res.code
@@ -60,7 +61,7 @@ def makeRequest(uri,x_response,signature)
 	finish = (Time.now.to_f * 1000).to_i
 
 	delta = finish - start
-	results = Array[delta,res["Content-Length"]]
+	results = Array[delta,res["Content-Length"],ver]
 	return results
 end
 

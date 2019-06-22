@@ -16,7 +16,7 @@ uri = URI("http://"+$host+"/rsc/"+path)
 #puts uri.to_s
 #x_response = $x_response+";abl:"+abl
 delta = makeRequest(uri,$x_response,$signature)
-
+ver_times = ""
 times = ""
 content_length = 0
 j = 0
@@ -32,8 +32,10 @@ while j < $steps
 	  results = makeRequest(uri,x_response,$signature)
 	  delta = results[0]
 	  content_length = results[1]
+	  ver = results[2]
 	  times = times + delta.to_s + "\n"
-	  puts delta
+	  ver_times = ver_times + ver.to_s + "\t" + content_length.to_s + "\n"
+	  puts "delta: #{delta} content_length: #{content_length} ver: #{ver}"
 	  times_array.push(delta)
 	  i += 1
 	  sleep $pause
@@ -76,3 +78,4 @@ end
 
 # CSV.open(filename, "wb") {|csv| $csv_array.to_a.each {|elem| csv << elem} }
 File.write("./size_test_#{x_response_filename}_#{$host}_#{$number_of_valid_test}_sig_#{$signature}"+(Time.now.to_f * 1000).to_i.to_s+".txt", $csv)
+File.write("./ver_time_size_test_#{x_response_filename}_#{$host}_#{$number_of_valid_test}_sig_#{$signature}"+(Time.now.to_f * 1000).to_i.to_s+".txt", ver_times)
