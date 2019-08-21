@@ -13,12 +13,13 @@ i = 0
 path = SecureRandom.hex(10)
 uri = URI("http://"+$host+"/rsc/"+path)
 puts uri.to_s
-delta = makeRequest(uri,$x_response,$signature)
+delta = makeRequest(uri,$x_response,$signature,$replay_attack_protection)
 ver_times = ""
 times = ""
 
 while i < number_of_total_test
-  results = makeRequest(uri,$x_response,$signature)
+  puts uri.to_s
+  results = makeRequest(uri,$x_response,$signature,$replay_attack_protection)
   #puts results
   content_length = results[1]
   delta = results[0]

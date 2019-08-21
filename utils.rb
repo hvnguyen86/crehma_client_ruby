@@ -23,7 +23,7 @@ $tbsResponseHeaders = Array[
 $verifiedSignatures = Array.new
 #puts $tbsResponseHeaders
 
-def makeRequest(uri,x_response,signature)
+def makeRequest(uri,x_response,signature,replay_attack_protection)
 	
 	req = Net::HTTP::Get.new(uri)
 	req["X-Response"] = x_response
@@ -46,7 +46,7 @@ def makeRequest(uri,x_response,signature)
 	ver = 0
 	if signature
 		start_verification = (Time.now.to_f * 1000).to_i
-		if !verifyResponse(res,uri.hostname+uri.path,"GET")
+		if !verifyResponse(res,uri.hostname+uri.path,"GET",replay_attack_protection)
 			puts "Wrong Signature"
 		end
 		end_verification = (Time.now.to_f * 1000).to_i
@@ -54,11 +54,11 @@ def makeRequest(uri,x_response,signature)
 		#puts "ver:" + (end_verification - start_verification).to_s
 	end
 	# puts res.code
-	# puts res.body
+	#puts res.body
 	#puts res.each_header.to_h
 	# response = http.request(req)
-	#json = JSON.parse(res.body)
-	#puts json["Id"]
+	json = JSON.parse(res.body)
+	puts json["Id"]
 	finish = (Time.now.to_f * 1000).to_i
 
 	delta = finish - start
@@ -95,7 +95,7 @@ def signRequest(request)
 	return signatureHeaderTemplate
 end
 
-def verifyResponse(response, cacheKey, method)
+def verifyResponse(response, cacheKey, method, replay_attack_protection)
 	signatureHeader = response["Signature"]
 	signatureHeaderParams = signatureHeader.split(",")
 	sv_to_check = ""
@@ -130,7 +130,7 @@ def verifyResponse(response, cacheKey, method)
 	# puts "------"
 	sv  = Base64.urlsafe_encode64(OpenSSL::HMAC.digest('sha256', $key, tbs)).gsub("=","")
 	if sv_to_check == sv
-		if $verifiedSignatures.include?(sv)
+		if $verifiedSignatures.include?(sv) && replay_attack_protection
 			maxAge = 0
 			cacheControlHeader = response["Cache-Control"]
 			cacheControlHeaderParams = cacheControlHeader.split(",")

@@ -9,13 +9,12 @@ require "csv"
 
 number_of_total_test = $number_of_valid_test + $number_of_invalid_test;
 
-
 $csv_array = Hash.new
 path = SecureRandom.hex(10)
 uri = URI("http://"+$host+"/rsc/"+path)
 #puts uri.to_s
 #x_response = $x_response+";abl:"+abl
-delta = makeRequest(uri,$x_response,$signature)
+delta = makeRequest(uri,$x_response,$signature,$replay_attack_protection)
 ver_times = ""
 times = ""
 content_length = 0
@@ -29,7 +28,7 @@ while j < $steps
 	times_array = Array.new
 	while i < number_of_total_test
   
-	  results = makeRequest(uri,x_response,$signature)
+	  results = makeRequest(uri,x_response,$signature,$replay_attack_protection)
 	  delta = results[0]
 	  content_length = results[1]
 	  ver = results[2]
